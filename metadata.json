@@ -1,0 +1,5 @@
+{
+  "name": "Analizador de Presupuesto de Investigación",
+  "description": "Aplicación para el análisis y seguimiento financiero de proyectos de investigación mediante archivos de Excel de planeación y ejecución.",
+  "requestFramePermissions": []
+}
