@@ -147,14 +147,17 @@ export default function App() {
   }, [data, states]);
 
   const getChartData = useCallback((filtered: { pData: PlanMensualItem[], rData: SeguimientoItem[] } | null) => {
-    if (!filtered) return [];
+    if (!filtered || !data) return [];
 
     const { pData, rData } = filtered;
     
-    // Fixed range: Nov 2022 to Oct 2026
+    // Dynamic range from data
     const allMonths: string[] = [];
-    const startDate = new Date(2022, 10, 1);
-    const endDate = new Date(2026, 9, 1);
+    const [minYear, minMonth] = data.minMes.split('-').map(Number);
+    const [maxYear, maxMonth] = data.maxMes.split('-').map(Number);
+    
+    const startDate = new Date(minYear, minMonth - 1, 1);
+    const endDate = new Date(maxYear, maxMonth - 1, 1);
     
     let current = new Date(startDate);
     while (current <= endDate) {
@@ -187,7 +190,7 @@ export default function App() {
         cumReal: (mes <= mesActual || valReal > 0) ? cumReal : null
       };
     }) as ChartDataPoint[];
-  }, []);
+  }, [data]);
 
   const getMetrics = useCallback((filtered: { pData: PlanMensualItem[], rData: SeguimientoItem[] } | null) => {
     if (!filtered) return null;
